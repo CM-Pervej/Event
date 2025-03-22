@@ -1,76 +1,98 @@
 event-management-system/
 │
-├── public/                             # Public-facing files (accessed via browser or API)
-│   ├── index.php                       # Home or redirect to login
-│   ├── register.php                    # Registration page (HTML + form)
-│   ├── login.php                       # Login page (HTML + form)
-│   ├── dashboard.php                   # Protected user dashboard
-│   ├── user_list.php                   # Protected user list page
-│   ├── event-details.php              # Public event display
-│   ├── verify.php                      # Email verification handler
-│   ├── refresh.php                     # Refresh token endpoint
-│   ├── logout.php                      # Logout and token revocation
-│   ├── assets/                         # Static assets
-│   │   ├── css/
-│   │   │   └── tailwind.css
-│   │   ├── js/
-│   │   │   └── main.js
-│   │   └── img/
-│   │       └── placeholder.png
+├── .env                   # Environment variables (DB, JWT secret, etc.)
+├── .env.example           # Template for .env
+├── README.md              # Project overview
+├── composer.json          # For PHPMailer, JWT, etc.
+├── tailwind.config.js     # Tailwind customization (optional)
 │
-├── includes/                           # Shared PHP includes
-│   ├── header.php                      # Top navigation bar
-│   ├── footer.php                      # Footer with scripts
-│   ├── auth.php                        # Basic session auth check
-│   └── functions.php                   # Common helper functions
+├── public/                                # Publicly accessible via browser
+│   ├── index.php                          # Home (or redirect to login)
+│   ├── register.php                       # User registration
+│   ├── login.php                          # User login form
+│   ├── verify.php                         # Email verification
+│   ├── refresh.php                        # Refresh token API
+│   ├── logout.php                         # Logout + blacklist token
+│   ├── dashboard.php                      # Protected user dashboard
+│   ├── user_list.php                      # Protected user list (organizer/admin)
+│   ├── event_list.php                     # List user's events
+│   ├── event_create.php                   # Form to create new event
+│   │
+│   ├── admin/                             # Admin panel section
+│   │   ├── index.php                      # Admin dashboard
+│   │   ├── users.php                      # Manage users
+│   │   ├── events.php                     # Manage events
+│   │   ├── tickets.php                    # Ticket overview
+│   │   └── login.php                      # (Optional separate admin login)
+│   │
+│   └── assets/                            # Static assets
+│       ├── css/
+│       │   └── tailwind.css
+│       ├── js/
+│       │   └── main.js
+│       └── img/
+│           └── placeholder.png
 │
-├── config/                             # Configuration files
-│   ├── db.php                          # PDO DB connection
-│   └── env.php                         # Loads variables from .env
+├── includes/                              # Shared components
+│   ├── header.php                         # Page header + nav
+│   ├── footer.php                         # Footer + scripts
+│   ├── auth.php                           # Session helpers (optional)
+│   └── functions.php                      # Utility functions
 │
-├── middleware/                         # Security and validation middleware
-│   └── token_protect.php               # JWT auth middleware for protected routes
+├── config/                                # Core config
+│   ├── db.php                             # PDO connection
+│   └── env.php                            # Loads .env values into $_ENV
 │
-├── services/                           # Service-based architecture
-│   ├── auth/                           # Auth logic (JWT + password)
-│   │   ├── jwt_utils.php
-│   │   ├── secret.php
-│   │   └── session.php                 # Optional: session helpers
+├── middleware/                            # Access protection
+│   ├── token_protect.php                  # JWT validation
+│   └── admin_only.php                     # Restricts access to admin users
+│
+├── services/                              # Business logic by module
+│   ├── auth/
+│   │   ├── jwt_utils.php                  # JWT generation/verification
+│   │   ├── secret.php                     # JWT_SECRET generation logic
+│   │   └── session.php                    # Optional: session helpers
+│   │
 │   ├── user/
-│   │   ├── register.php                # Registration logic
-│   │   ├── login.php                   # Login logic
-│   │   ├── profile.php                 # Profile update logic
+│   │   ├── register.php                   # Handles user registration
+│   │   ├── login.php                      # Handles login logic
+│   │   ├── profile.php                    # Update profile info
+│   │   └── promote.php                    # Promote user to admin
+│   │
 │   ├── event/
-│   │   ├── create.php
-│   │   ├── update.php
-│   │   ├── list.php
+│   │   ├── create.php                     # Create new event
+│   │   ├── list.php                       # Get all events
+│   │   └── update.php                     # Edit existing event
+│   │
 │   ├── ticket/
-│   │   ├── purchase.php
-│   │   ├── refund.php
-│   │   └── types.php
+│   │   ├── purchase.php                   # Buy ticket
+│   │   ├── refund.php                     # Refund logic
+│   │   └── types.php                      # Ticket type definitions
+│   │
 │   ├── speaker/
-│   │   ├── add.php
-│   │   ├── list.php
+│   │   ├── add.php                        # Add speaker to event
+│   │   └── list.php                       # List event speakers
+│   │
 │   ├── notification/
-│   │   ├── email.php                   # PHPMailer setup
-│   │   └── sms.php                     # Optional: Twilio, etc.
+│   │   ├── email.php                      # Email sending (PHPMailer)
+│   │   └── sms.php                        # Optional: SMS sending
+│   │
 │   └── payment/
-│       ├── gateway.php                 # Stripe/SSLCommerz/etc
-│       └── webhook.php                 # Payment success handler
+│       ├── gateway.php                    # Integrate Stripe/SSLCommerz
+│       └── webhook.php                    # Handle payment callbacks
 │
-├── database/                           # SQL schemas & seeds
-│   ├── schema.sql                      # Users, tokens, events, etc.
+├── uploads/                               # Uploaded media files
+│   ├── users/                             # Profile pictures
+│   └── events/                            # Event banners, documents
+│
+├── database/                              # SQL files
+│   ├── schema.sql                         # Master schema (users, events, etc.)
+│   ├── create_users.sql
 │   ├── create_user_tokens.sql
 │   ├── create_token_blacklist.sql
-│   └── sample_seed.sql                 # Optional: test data
+│   ├── create_events.sql
+│   ├── create_tickets.sql
+│   ├── create_speakers.sql
+│   └── seed_sample_data.sql               # Optional test data
 │
-├── uploads/                            # Uploaded content
-│   ├── users/                          # Profile pictures
-│   └── events/                         # Banners, files
-│
-├── vendor/                             # Composer dependencies
-│
-├── .env                                # Actual config file (not committed)
-├── .env.example                        # Template .env
-├── tailwind.config.js                  # Optional: Tailwind customization
-└── README.md                           # Project instructions
+└── vendor/                                # Composer-managed dependencies

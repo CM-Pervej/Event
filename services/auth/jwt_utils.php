@@ -9,7 +9,7 @@ function generateAccessToken($userId) {
     return JWT::encode([
         'iss' => 'event-system',
         'sub' => $userId,
-        'exp' => time() + (15 * 60)
+        'exp' => time() + (24 * 60 * 60)
     ], JWT_SECRET, 'HS256');
 }
 
