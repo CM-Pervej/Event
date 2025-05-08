@@ -48,7 +48,7 @@ session_destroy();
 
 // Redirect to login page if called from browser
 if (!(isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false)) {
-    header("Location: login.php");
+    header("Location: ../index.php");
     exit;
 }
 

@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS users (
     phone VARCHAR(20),
     password VARCHAR(255) NOT NULL,
     address TEXT,
-    role ENUM('organizer', 'attendee', 'admin') DEFAULT 'attendee',
+    role INT DEFAULT 1, -- 1: Attendee, 2: Organizer, 3: Admin
     dietary_requirements TEXT,
     accessibility_needs TEXT,
     profile_picture VARCHAR(255),

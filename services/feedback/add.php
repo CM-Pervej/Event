@@ -24,5 +24,5 @@ if ($stmt->rowCount() > 0) {
 $stmt = $pdo->prepare("INSERT INTO feedback (user_id, event_id, rating, comment) VALUES (?, ?, ?, ?)");
 $stmt->execute([$userId, $eventId, $rating, $comment]);
 
-header("Location: ../../public/event_list.php");
+header("Location: ../../public/events/event_list.php");
 exit;

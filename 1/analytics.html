@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <title>Analytics – AmarEvent</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.0.0/dist/full.css" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/8e69038194.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-base-200 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white shadow p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-primary">Analytics Dashboard</h1>
+  </header>
+
+  <!-- Analytics Content -->
+  <main class="p-6 max-w-7xl mx-auto space-y-10">
+
+    <!-- Overview Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="stat bg-white shadow">
+        <div class="stat-title">Total Events</div>
+        <div class="stat-value text-primary">12</div>
+      </div>
+      <div class="stat bg-white shadow">
+        <div class="stat-title">Tickets Sold</div>
+        <div class="stat-value text-secondary">324</div>
+      </div>
+      <div class="stat bg-white shadow">
+        <div class="stat-title">Revenue</div>
+        <div class="stat-value text-accent">$8,650</div>
+      </div>
+      <div class="stat bg-white shadow">
+        <div class="stat-title">Unique Attendees</div>
+        <div class="stat-value text-info">271</div>
+      </div>
+    </div>
+
+    <!-- Sales Over Time Chart -->
+    <div class="bg-white p-6 rounded shadow">
+      <h2 class="text-xl font-semibold mb-4">Ticket Sales (Last 7 Days)</h2>
+      <canvas id="salesChart" height="100"></canvas>
+    </div>
+
+    <!-- Ticket Type Distribution -->
+    <div class="bg-white p-6 rounded shadow">
+      <h2 class="text-xl font-semibold mb-4">Ticket Type Distribution</h2>
+      <canvas id="ticketPieChart" height="100"></canvas>
+    </div>
+
+  </main>
+
+  <!-- Charts Script -->
+  <script>
+    // Sales over time chart (mock data)
+    const salesCtx = document.getElementById('salesChart').getContext('2d');
+    new Chart(salesCtx, {
+      type: 'line',
+      data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [{
+          label: 'Tickets Sold',
+          data: [12, 19, 13, 15, 22, 30, 28],
+          fill: false,
+          borderColor: '#3b82f6',
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false }
+        }
+      }
+    });
+
+    // Ticket type pie chart
+    const pieCtx = document.getElementById('ticketPieChart').getContext('2d');
+    new Chart(pieCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Standard', 'VIP', 'Group'],
+        datasets: [{
+          label: 'Ticket Types',
+          data: [180, 100, 44],
+          backgroundColor: ['#10b981', '#f59e0b', '#3b82f6'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom' }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

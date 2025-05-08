@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $address = htmlspecialchars(trim($_POST['address']));
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
-    $role = $_POST['role'] ?? 'attendee';
+    $role = (int)$_POST['role'];
     $dietary = htmlspecialchars(trim($_POST['dietary']));
     $accessibility = htmlspecialchars(trim($_POST['accessibility']));
     $verification_token = bin2hex(random_bytes(16));
@@ -125,14 +125,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         <?php endif; ?>
 
-        <form method="POST" action="register.php" enctype="multipart/form-data" class="space-y-4">
+        <form method="POST" action="register.php" enctype="multipart/form-data" class="space-y-4" autocomplete="off">
             <input type="text" name="full_name" placeholder="Full Name" class="input input-bordered w-full" required>
             <input type="email" name="email" placeholder="Email" class="input input-bordered w-full" required>
             <input type="text" name="phone" placeholder="Phone" class="input input-bordered w-full">
             <input type="text" name="address" placeholder="Address" class="input input-bordered w-full">
-            <select name="role" class="select select-bordered w-full">
-                <option value="attendee">Attendee</option>
-                <option value="organizer">Organizer</option>
+            <select name="role" class="select select-bordered w-full" required>
+                <option value="1">Attendee</option>
+                <option value="2">Organizer</option>
             </select>
             <textarea name="dietary" placeholder="Dietary Requirements" class="textarea textarea-bordered w-full"></textarea>
             <textarea name="accessibility" placeholder="Accessibility Needs" class="textarea textarea-bordered w-full"></textarea>

@@ -32,7 +32,13 @@ if ($authHeader && str_starts_with($authHeader, 'Bearer ')) {
 
 if (!$accessToken) {
     http_response_code(401);
-    echo "Access denied. Please login.";
+    // echo "Access denied. Please login.";
+
+    // // Delay before redirecting (optional, gives user a chance to read the message)
+    // sleep(20); // Adjust the time delay (20 seconds)
+
+    // // Redirect the user to the index page after the message is shown
+    header("Location: /event/index.php");
     exit;
 }
 
